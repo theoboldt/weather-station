@@ -51,7 +51,7 @@ function logValues(
         $stmt = $db->prepare(
             "INSERT INTO moisture (moisture01, moisture02) VALUES (?, ?);"
         );
-        $stmt->bind_param($moisture1, $moisture2);
+        $stmt->bind_param("ii", $moisture1, $moisture2);
         $stmt->execute();
         $stmt->close();
         $db->close();
