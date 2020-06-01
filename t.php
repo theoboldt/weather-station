@@ -45,7 +45,7 @@ function logValues(
     int $id, ?float $temperature = null, ?float $pressure = null, ?float $rain = null, ?float $humidity = null
 )
 {
-    $db = mysqli_connect("localhost", "d02edd23", "q88eoLN5RoRW7vtB", "d02edd23");
+        $db = mysqli_connect("localhost", DB_USER, DB_PASSWORD, DB_DB);
     // Check connection
     if ($db->connect_error) {
         file_put_contents('error.log', 'ERROR DB ' . $db->connect_error . "\n", FILE_APPEND);
