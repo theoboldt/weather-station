@@ -1,0 +1,6 @@
+<?php
+
+define('TOKEN', "notsosecret");
+define('DB_USER', "");
+define('DB_DB', "");
+define('DB_PASSWORD', "");
