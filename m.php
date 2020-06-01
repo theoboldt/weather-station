@@ -7,7 +7,7 @@ if (!defined('TOKEN') || !defined('DB_USER') || !defined('DB_DB') || !defined('D
     exit();
 }
 
-file_put_contents('access_t.log', date('U') . "\n", FILE_APPEND);
+file_put_contents('access_m.log', date('U') . "\n", FILE_APPEND);
 
 if (!isset($_GET['i']) || !isset($_GET['x'])) {
     http_response_code(400);
@@ -19,8 +19,8 @@ if ($_GET['x'] !== TOKEN) {
 }
 
 if ($_GET['test']) {
-	http_response_code(200);
-	exit();
+    http_response_code(200);
+    exit();
 }
 
 http_response_code(204);
@@ -34,27 +34,24 @@ ob_flush();
 flush();
 
 logValues(
-    (int)$_GET['i'],
-    isset($_GET['t']) ? (float)$_GET['t'] : null,
-    isset($_GET['p']) ? (float)$_GET['p'] : null,
-    isset($_GET['r']) ? (int)$_GET['r'] : null,
-    isset($_GET['h']) ? (float)$_GET['h'] : null
+    isset($_GET['m1']) ? (int)$_GET['m1'] : null,
+    isset($_GET['m2']) ? (int)$_GET['m2'] : null,
 );
 
 function logValues(
-    int $id, ?float $temperature = null, ?float $pressure = null, ?float $rain = null, ?float $humidity = null
-)
-{
-        $db = mysqli_connect("localhost", DB_USER, DB_PASSWORD, DB_DB);
+    ?int $moisture1 = null,
+    ?int $moisture2 = null
+) {
+    $db = mysqli_connect("localhost", DB_USER, DB_PASSWORD, DB_DB);
     // Check connection
     if ($db->connect_error) {
         file_put_contents('error.log', 'ERROR DB ' . $db->connect_error . "\n", FILE_APPEND);
     } else {
         // prepare and bind
         $stmt = $db->prepare(
-            "INSERT INTO measurements (sensor_id, temperature, pressure, rain, humidity) VALUES (?, ?, ?, ?, ?);"
+            "INSERT INTO moisture (moisture01, moisture02) VALUES (?, ?);"
         );
-        $stmt->bind_param("iddid", $id, $temperature, $pressure, $rain, $humidity);
+        $stmt->bind_param($moisture1, $moisture2);
         $stmt->execute();
         $stmt->close();
         $db->close();
