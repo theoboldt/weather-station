@@ -9,7 +9,7 @@ if (!defined('TOKEN') || !defined('DB_USER') || !defined('DB_DB') || !defined('D
 
 file_put_contents('access_m.log', date('U') . "\n", FILE_APPEND);
 
-if (!isset($_GET['m1']) || !isset($_GET['m2'])) {
+if (!isset($_GET['x'])) {
     http_response_code(400);
     exit();
 }
